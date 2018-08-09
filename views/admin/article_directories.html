@@ -1,0 +1,204 @@
+<!--/* 我的文章目录 css*/-->
+
+
+{% extends 'admin.html' %}
+{% block article_directories %}
+<div style="float: left; margin-left: 30px;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #Edit_headerTitle{background-color: #e5eef7;
+                            display: block;
+                            height: 40px;
+                            width: 100%;
+                            border-top: 1px solid #999999;
+                            font-size: 120%;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            padding: 2px 12px;
+                            margin: 63px 0px 0px 0px;}
+        #Add_headerTitle{
+                            background-color: #e5eef7;
+                            display: block;
+                            height: 40px;
+                            width: 100%;
+                            border-top: 1px solid #999999;
+                            font-size: 120%;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            padding: 2px 12px;
+                            margin: 63px 0px 0px 0px;
+
+        }
+
+        table {
+            border-collapse: collapse;
+            border: solid;
+        }
+        tr {
+            border: solid;
+        }
+        th {border: solid; width: 200px;}
+        td {border: solid; text-align: center;height: 35px;}
+
+        </style>
+</head>
+<body>
+
+
+<!--思路： 1. 获取后端数据， 标题， 发布状态（发布，未发布）， 评论数， 阅读数， 操作（编辑）， 操作（删除）-->
+<!--思路： 2. 建立表格前端样式-->
+<!---->
+    <div class="Category">
+        <!--<span id="Edit_headerTitle">Edit Categories</span>-->
+        <table>
+            <tbody></tbody>
+        </table>
+    </div>
+
+</body>
+    <script type="text/javascript" src="/static/admin/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+
+    // 1. 先获取浏览器的宽度
+    // 2. 获取左边的宽度
+    // 3. 相减
+
+    window.onload=function (){
+
+
+        var form = {"UserID": 123456,};
+
+        // 写ajax 获取 category ， 然后生成table
+        $.ajax({
+                url: "/show_sample_user_all_article",
+                type: 'post',
+                data: form,
+                success: function(arg){
+                    var my_data = JSON.parse(arg);
+                    if (my_data["statuscode"]==2000){
+                        var category_info = my_data["value"];
+
+
+                       // 1. 先生成表头
+                       // 2. 在生成table body
+                        <!--var title = [];-->
+                       var title = [
+                                  // 'ID',
+                                   'ArticleTitle',
+                                  //  'AllHtml',
+                                  //  'WriteHtmlContent',
+                                  //  'WriteHtml',
+                                  //  'UserID',
+                                   'CreateTime',
+                                  // 'ArticleStatus',
+                                  //'Version',
+                                  //  'HomePage',
+                                   'Release',
+                                  //  'AllowComment',
+                                  //  'Top',
+                                  //  'AllowUserVisit',
+                                  //  'AllowPassword',
+                                  //  'Password',
+                                  //  'Tag',
+                                  //  'Friends',
+                                  //  'CategoryID'
+                                  "编辑",
+                                  "删除"
+                                 ];
+                       var table = document.getElementsByTagName('table')[0];
+
+                       if(category_info.length != 0){
+                            <!--for (var i in category_info[0]){-->
+                                   <!--title.push(i);-->
+
+                            <!--}-->
+
+
+                             for (var c = 0; c < title.length; c++){
+                                 var th = document.createElement('th');
+                                 table.getElementsByTagName('tbody')[0].appendChild(th);
+                                 table.getElementsByTagName('tbody')[0].getElementsByTagName('th')[c].innerHTML = title[c];
+
+                             }
+
+
+                            for (var b = 0; b < category_info.length; b++){
+                                 var tr = document.createElement('tr');
+
+                                 for (var i in title){
+                                    var td = document.createElement("td");
+                                    if (title[i] == 'Release'){
+                                        if (title[i] == 'Release' && category_info[b][title[i]] == 1) {
+                                            td.innerHTML = "发布";
+                                        }else if (title[i] == 'Release' && category_info[b][title[i]] == 2) {
+                                            td.innerHTML = "草稿";
+
+                                        }
+
+                                    } else if (title[i] == '编辑') {
+                                        td.innerHTML = '<a href="/edit_article.html?id=' + category_info[b]["ID"] + '">编辑</a>';
+                                    }else if (title[i] == '删除') {
+                                        td.innerHTML = '<a href="javascript:void(0)" onclick="delect_article(this);">删除</a>';
+                                    }
+
+
+                                    else{
+                                        td.innerHTML = "" + category_info[b][title[i]];
+                                    }
+                                    td.setAttribute("class", category_info[b]["ID"]);
+
+                                    tr.appendChild(td);
+                                 }
+
+                                 table.appendChild(tr);
+
+
+
+                            }
+
+
+
+                       }
+
+
+                    }
+
+                }
+            })
+
+
+    }
+
+
+function delect_article(obj)
+{
+var r=confirm("Are you sure you want to delete article?");
+if (r==true){
+    var a = obj.parentElement.getAttribute("id");
+
+    form = {"article_id": a};
+
+    $.ajax({
+                url: "/show_sample_user_all_article",
+                type: 'post',
+                data: form,
+                success: function(arg){
+
+                }
+            })
+
+
+}
+
+else{}
+
+}
+
+    </script>
+</html>
+</div>
+{% end %}

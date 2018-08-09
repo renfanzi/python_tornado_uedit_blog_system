@@ -1,0 +1,189 @@
+<!--编辑文章分类页面-->
+
+
+{% extends 'admin.html' %}
+{% block edit_classify %}
+<div class="right_side" style="float: left; margin-left: 30px; width: 60%">
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <style>
+        #Edit_headerTitle{background-color: #e5eef7;
+                            display: block;
+                            height: 40px;
+                            width: 100%;
+                            border-top: 1px solid #999999;
+                            font-size: 120%;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            padding: 2px 12px;
+                            margin: 63px 0px 0px 0px;}
+        #Add_headerTitle{
+                            background-color: #e5eef7;
+                            display: block;
+                            height: 40px;
+                            width: 100%;
+                            border-top: 1px solid #999999;
+                            font-size: 120%;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            padding: 2px 12px;
+                            margin: 63px 0px 0px 0px;
+
+        }
+
+        table {
+            border-collapse: collapse;
+            border: solid;
+        }
+        tr {
+            border: solid;
+        }
+        th {border: solid; width: 200px;}
+        td {border: solid; text-align: center;height: 35px;}
+
+        </style>
+    </head>
+    <body>
+
+    <div class="Category">
+        <span id="Edit_headerTitle">Edit Categories</span>
+        <table>
+            <tbody></tbody>
+        </table>
+    </div>
+    <div>
+        <!--Add New Category-->
+        <span id="Add_headerTitle" style="">Add New Category</span>
+        <hr/>
+        <h3>
+            Title
+        </h3>
+        <input type="text" id="title" size="40" style="height: 30px; font-size: 18px" autocomplete="off">
+        <h3>
+            Description(30 characters including HTML)
+        </h3>
+        <textarea rows="10" id="description" cols="54" style="display: block; margin-bottom: 20px;"></textarea>
+        <input onclick="AddArticleClass()" type="button" value="ADD">
+    </div>
+    <script type="text/javascript" src="/static/admin/js/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+
+    // 1. 先获取浏览器的宽度
+    // 2. 获取左边的宽度
+    // 3. 相减
+
+    window.onload=function (){
+
+        <!--var total_length = window.innerWidth;-->
+        <!--console.log(total_length);-->
+        <!--var left_length = document.getElementsByClassName("nav")[0].offsetHeight;-->
+        <!--var right_length = total_length - left_length;-->
+
+        var form = {};
+
+        <!--document.getElementsByClassName("right_side")[0].style.width = right_length + 'px';-->
+
+
+
+        // 写ajax 获取 category ， 然后生成table
+        $.ajax({
+                url: "/showcategory",
+                type: 'post',
+                data: form,
+                success: function(arg){
+                    var my_data = JSON.parse(arg);
+                    if (my_data["statuscode"]==2000){
+                        var category_info = my_data["value"];
+
+
+                       // 1. 先生成表头
+                       // 2. 在生成table body
+                        <!--var title = [];-->
+                       var title = ["Title", "TitleStatus", "CreateTime"];
+                       var table = document.getElementsByTagName('table')[0];
+
+                       if(category_info.length != 0){
+                            <!--for (var i in category_info[0]){-->
+                                   <!--title.push(i);-->
+
+                            <!--}-->
+
+
+                            for (var c = 0; c < title.length; c++){
+                                var th = document.createElement('th');
+                                table.getElementsByTagName('tbody')[0].appendChild(th);
+                                table.getElementsByTagName('tbody')[0].getElementsByTagName('th')[c].innerHTML = title[c];
+
+                            }
+
+
+                            for (var b = 0; b < category_info.length; b++){
+                                 var tr = document.createElement('tr');
+
+                                 for (var i in title){
+                                    var td = document.createElement("td");
+                                    if (title[i] == 'TitleStatus' && category_info[b][title[i]] == 1){
+                                        td.innerHTML = "True";
+                                    } else{
+                                        td.innerHTML = "" + category_info[b][title[i]];
+                                    }
+
+                                    tr.appendChild(td);
+                                 }
+
+                                 table.appendChild(tr);
+
+
+
+                            }
+
+
+
+                       }
+
+
+                    }
+
+                }
+            })
+
+
+    }
+
+
+
+    // 1. 去model获取类型， 然后生成表格
+
+
+    function AddArticleClass(){
+        var title;
+        title = document.getElementById("title").value;
+        description = document.getElementById("description").value;
+
+
+        var value = {};
+        value["title"] = title;
+        value["description"] = description;
+
+        $.ajax({
+            url: "/add_article_class",
+            type: 'post',
+            data: value,
+            success: function(arg){
+                alert(arg);
+            }
+
+        })
+    }
+
+
+
+
+    </script>
+    </body>
+    </html>
+</div>
+{% end %}

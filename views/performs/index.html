@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #ac-globalnav {
+             position: absolute;
+             top: 0;
+             right: 0;
+             left: 0;
+             display:block;
+             z-index:9999;
+             margin: 0;
+             width: 100%;
+             min-width: 1024px;
+             height: 88px;
+             max-height: 100px;
+             background: #333;
+             background: rgba(0,0,0,0.8);
+             font-size: 17px;
+             user-select: none;
+         }
+         #web_button {
+             position: absolute;
+             bottom: 0;
+             right: 0;
+             left: 0;
+             z-index: 9999;
+             display: block;
+             margin: 0;
+             width: 100%;
+             min-width: 1024px;
+             height: 44px;
+             max-height: 100px;
+             background: #333;
+             background: rgba(0,0,0,0.8);
+             font-size: 17px;
+             user-select: none;
+             line-height:44px;
+         }
+
+        .globalnav_li {
+              display: inline;
+              list-style:none;
+              margin:0 35px 0 35px;
+              color: #fff;
+              line-height:88px;
+              list-style-type:none;
+              cursor:pointer;
+
+        }
+
+        .globalnav_li:hover{
+            color: red;
+            <!--想换加入背景色的话， 可以使用background-->
+        }
+        .globalnav_ul {
+            float:left;
+            margin-left:18%;
+            margin-top:0px;
+            margin-bottom:0px;
+            list-style-type:none;
+        }
+
+        #web-body{
+
+            position: fixed;
+            left: 0;
+            right: 0;
+            padding: 0;
+            margin: 0;
+
+            top: 88px;
+            bottom: 44px;
+
+            overflow: auto;
+
+            background: white;
+        }
+
+
+        #body_content{
+            <!--width:100%;-->
+            height:100%;
+            margin:0 22.5%;
+
+        }
+        .active{
+            color: red;
+        }
+        .hide{
+            display:none;
+        }
+    </style>
+</head>
+<body>
+<!--top-->
+<div>
+    <div id="ac-globalnav">
+        <ul class="globalnav_ul">
+            <li class="globalnav_li active" target="h1" onclick="SHOW(this)">首页</li>
+            <li class="globalnav_li" target="h2" onclick="SHOW(this)">自学教程</li>
+            <li class="globalnav_li" target="h3" onclick="SHOW(this)">指法表</li>
+            <li class="globalnav_li" target="h4" onclick="SHOW(this)">曲谱</li>
+            <li class="globalnav_li" target="h5" onclick="SHOW(this)">视频作品</li>
+            <li class="globalnav_li" target="h6" onclick="SHOW(this)">资料下载</li>
+            <li class="globalnav_li" target="h7" onclick="SHOW(this)">社区</li>
+            <li class="globalnav_li" target="h8" onclick="SHOW(this)">搜索</li>
+
+            <li></li>
+        </ul>
+    </div>
+
+</div>
+
+<!--body-->
+<div id="web-body">
+    <div style="height: auto;">
+        <div id="body_content">
+
+            <!--&lt;!&ndash; 主题头部声明&ndash;&gt;-->
+            <!--<div>-->
+                <!--<div>-->
+                    <!--<h1 style="color:#666666; display: inline-block; margin-right:50px;">箫谱</h1>-->
+                    <!--<strong style="color:#666666">流行热门歌曲简谱、民族音乐简谱</strong>-->
+                <!--</div>-->
+
+            <!--</div>-->
+
+            <!--&lt;!&ndash;中间部分&ndash;&gt;-->
+            <!--<div>-->
+                <!--&lt;!&ndash;左边&ndash;&gt;-->
+                <!--<div>-->
+
+                <!--</div>-->
+                <!--&lt;!&ndash;右边&ndash;&gt;-->
+                <!--<div>-->
+
+                <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;底部,分页等&ndash;&gt;-->
+            <!--<div>-->
+
+            <!--</div>-->
+            <div id="content">
+
+                <!--<div con="h1"></div>-->
+                <div con="h1"><h3></h3>{% include 'index_home.html' %}</div>
+                <div con="h2" class="hide">h2</div>
+                <div con="h3" class="hide">h3</div>
+                <div con="h4" class="hide">{% include 'numbered_musical_notation.html' %}</div>
+                <div con="h5" class="hide">h5</div>
+                <div con="h6" class="hide">h6</div>
+                <div con="h7" class="hide">h7</div>
+                <div con="h8" class="hide">h8</div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<!--button-->
+<div id="web_button">
+    <div>
+        <img src="">
+    </div>
+
+</div>
+<script type="text/javascript" src="/static/admin/js/base.js"></script>
+<script type="text/javascript">
+
+function SHOW(ths) {
+    // body...
+    // 修改li颜色
+
+    var target = ths.getAttribute("target");
+    ths.classList.add('active');
+    var brothers = ths.parentElement.children;
+    for (var i = 0; i < brothers.length; i++) {
+
+        if (ths == brothers[i]) {
+
+        } else {
+            brothers[i].classList.remove('active');
+        }
+    }
+    // 修改显示内容
+    //
+    //
+    var content_brothers = document.getElementById("content").children;
+    for (var i = 0;i < content_brothers.length; i++) {
+        var content_target = content_brothers[i].getAttribute("con");
+
+        if (target == content_target) {
+            content_brothers[i].setAttribute("class", "");
+        } else {
+            content_brothers[i].setAttribute("class", "hide");
+        }
+    }
+
+
+}
+</script>
+
+</body>
+</html>

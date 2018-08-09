@@ -1,0 +1,453 @@
+<!--/*创建文章*/-->
+{% extends 'admin.html' %}
+{% block create_article %}
+<div style="float: left; margin-left: 30px;">
+    <style>
+        .Edit_headerTitle{background-color: #e5eef7;
+                            display: block;
+                            height: 40px;
+                            width: 100%;
+                            border-top: 1px solid #999999;
+                            font-size: 120%;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            padding: 2px 12px;
+                            margin: 23px 0px 0px 0px;}
+
+    </style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="./static/admin/css/create_article.css">
+</head>
+<body>
+
+<!--文章标题部分-->
+
+<h3>标题</h3>
+<input class="titleInput" type="text" value=""  maxlength="200" >
+
+
+<!--富文本编辑器区域-->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>内容</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="{{ static_url('ueditor/ueditor.config.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('ueditor/ueditor.all.min.js') }}"></script>
+    <script type="text/javascript" src="{{ static_url('ueditor/lang/zh-cn/zh-cn.js') }}"></script>
+
+    <style type="text/css">
+
+
+
+    </style>
+
+</head>
+<body>
+
+<div>
+    <h3>内容</h3>
+    <script id="editor" type="text/plain" style="width:1024px;height:500px;"></script>
+
+
+            </div>
+            <div id="btns">
+                <!--<div>-->
+                    <!--<button onclick="getAllHtml()">获得整个html的内容</button>-->
+                    <!--<button onclick="getContent()">获得内容</button>-->
+                    <!--<button onclick="setContent()">写入内容</button>-->
+                    <!--<button onclick="setContent(true)">追加内容</button>-->
+                    <!--<button onclick="getContentTxt()">获得纯文本</button>-->
+                    <!--<button onclick="getPlainTxt()">获得带格式的纯文本</button>-->
+                    <!--<button onclick="hasContent()">判断是否有内容</button>-->
+                    <!--<button onclick="setFocus()">使编辑器获得焦点</button>-->
+                    <!--<button onmousedown="isFocus(event)">编辑器是否获得焦点</button>-->
+                    <!--<button onmousedown="setblur(event)" >编辑器失去焦点</button>-->
+
+                <!--</div>-->
+                <!--<div>-->
+                    <!--<button onclick="getText()">获得当前选中的文本</button>-->
+                    <!--<button onclick="insertHtml()">插入给定的内容</button>-->
+                    <!--<button id="enable" onclick="setEnabled()">可以编辑</button>-->
+                    <!--<button onclick="setDisabled()">不可编辑</button>-->
+                    <!--<button onclick=" UE.getEditor('editor').setHide()">隐藏编辑器</button>-->
+                    <!--<button onclick=" UE.getEditor('editor').setShow()">显示编辑器</button>-->
+                    <!--<button onclick=" UE.getEditor('editor').setHeight(600)">设置高度为300默认关闭了自动长高</button>-->
+                <!--</div>-->
+
+                <!--<div>-->
+                    <!--<button onclick="getLocalData()" >获取草稿箱内容</button>-->
+                    <!--<button onclick="clearLocalData()" >清空草稿箱</button>-->
+                <!--</div>-->
+
+            </div>
+            <div>
+                <!--<button onclick="createEditor()">-->
+                <!--创建编辑器</button>-->
+                <!--<button onclick="deleteEditor()">-->
+                <!--删除编辑器</button>-->
+            </div>
+
+            <script type="text/javascript">
+                window.onload=function(){
+                    UE.getEditor('editor').setHeight(600);
+                };
+
+                //实例化编辑器
+                //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+                var ue = UE.getEditor('editor', {
+                    serverUrl: "/upload/"
+                });
+
+
+                function isFocus(e){
+                    alert(UE.getEditor('editor').isFocus());
+                    UE.dom.domUtils.preventDefault(e)
+                }
+                function setblur(e){
+                    UE.getEditor('editor').blur();
+                    UE.dom.domUtils.preventDefault(e)
+                }
+                function insertHtml() {
+                    var value = prompt('插入html代码', '');
+                    UE.getEditor('editor').execCommand('insertHtml', value)
+                }
+                function createEditor() {
+                    enableBtn();
+                    UE.getEditor('editor');
+                }
+                function getAllHtml() {
+                    return UE.getEditor('editor').getAllHtml();
+                    <!--console.log(UE.getEditor('editor').getAllHtml())-->
+                    <!--document.write(UE.getEditor('editor').getAllHtml());-->
+                }
+                function getContent() {
+                    var arr = [];
+                    arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+                    arr.push("内容为：");
+                    arr.push(UE.getEditor('editor').getContent());
+                    <!--alert(arr.join("\n"));-->
+                    return UE.getEditor('editor').getContent()
+                }
+                function getPlainTxt() {
+                    var arr = [];
+                    arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+                    arr.push("内容为：");
+                    arr.push(UE.getEditor('editor').getPlainTxt());
+                    alert(arr.join('\n'))
+                }
+                function setContent(content, isAppendTo) {
+                    var arr = [];
+                    arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+                    UE.getEditor('editor').setContent(content, isAppendTo);
+                    <!--alert(arr.join("\n"));-->
+                }
+                function setDisabled() {
+                    UE.getEditor('editor').setDisabled('fullscreen');
+                    disableBtn("enable");
+                }
+
+                function setEnabled() {
+                    UE.getEditor('editor').setEnabled();
+                    enableBtn();
+                }
+
+                function getText() {
+                    //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+                    var range = UE.getEditor('editor').selection.getRange();
+                    range.select();
+                    var txt = UE.getEditor('editor').selection.getText();
+                    return txt;
+                }
+
+                function getContentTxt() {
+                    var arr = [];
+                    arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+                    arr.push("编辑器的纯文本内容为：");
+                    arr.push(UE.getEditor('editor').getContentTxt());
+                    <!--alert(arr.join("\n"));-->
+                    return UE.getEditor('editor').getContentTxt();
+                }
+                function hasContent() {
+                    var arr = [];
+                    arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+                    arr.push("判断结果为：");
+                    arr.push(UE.getEditor('editor').hasContents());
+                    alert(arr.join("\n"));
+                }
+                function setFocus() {
+                    UE.getEditor('editor').focus();
+                }
+                function deleteEditor() {
+                    disableBtn();
+                    UE.getEditor('editor').destroy();
+                }
+                function disableBtn(str) {
+                    var div = document.getElementById('btns');
+                    var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+                    for (var i = 0, btn; btn = btns[i++];) {
+                        if (btn.id == str) {
+                            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+                        } else {
+                            btn.setAttribute("disabled", "true");
+                        }
+                    }
+                }
+                function enableBtn() {
+                    var div = document.getElementById('btns');
+                    var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+                    for (var i = 0, btn; btn = btns[i++];) {
+                        UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+                    }
+                }
+
+                function getLocalData () {
+                    alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+                }
+
+                function clearLocalData () {
+                    UE.getEditor('editor').execCommand( "clearlocaldata" );
+                    alert("已清空草稿箱")
+                }
+</script>
+</body>
+</html>
+
+
+
+<!--选项区域-->
+    <div>
+        <!--缩略图-->
+        <div style="height:40px;">
+
+        </div>
+
+        <h3>上传博文略缩图</h3>
+        <input type="file" id="article_little_img" />
+
+
+    </div>
+    <div class="category">
+
+        <span class="Edit_headerTitle">Edit Categories</span>
+
+    </div>
+
+    <div class="senior_operation">
+        <span class="Edit_headerTitle">高级选项</span>
+
+        <p>
+            显示在我的博客首页
+            <input type="radio" name="is_homepage" value="1" checked="checked">Yes
+            <input type="radio" name="is_homepage" value="0">No
+        </p>
+        <p>
+            是否发布
+            <input type="radio" name="is_release" value="1" checked="checked">发布
+            <input type="radio" name="is_release" value="0">草稿
+        </p>
+        <p>
+            允许评论
+            <input type="radio" name="is_comment" value="1" checked="checked">Yes
+            <input type="radio" name="is_comment" value="0">No
+        </p>
+        <p>
+            是否置顶
+            <input type="radio" name="is_top" value="1">Yes
+            <input type="radio" name="is_top" value="0" checked="checked">No
+        </p>
+        <p>
+            密码保护
+            <input type="radio" name="is_password" value="1">Yes
+            <input type="radio" name="is_password" value="0" checked="checked">No
+        </p>
+        <p>
+            输入密码
+            <input type="Password" name="Password">
+        </p>
+        <p>
+            定义标签
+            <input type="text" name="tag" value=";分离">
+
+        </p>
+        <p>
+            推送好友
+            <input type="text" name="friends" value=";分离">
+        </p>
+
+    </div>
+
+    <div class="submit">
+        <span class="Edit_headerTitle">网站发布</span>
+        <p><input type="button" onclick="abc();" value="提交"></p>
+
+    </div>
+
+    <script type="text/javascript" src="/static/admin/js/jquery-1.10.2.js"></script>
+
+    <script type="text/javascript">
+
+            function getRadioRes(Name){
+
+                var rdsObj = document.getElementsByName(Name);
+                var checkVal = null;
+                for(i = 0; i < rdsObj.length; i++){
+                    if(rdsObj[i].checked){checkVal = rdsObj[i].value;}
+                }
+                return checkVal;
+            }
+            // 获取复选框
+            function many_checked(Name){
+                obj = document.getElementsByName(Name);
+                check_val = [];
+                for(k in obj){
+                    if(obj[k].checked)
+                        check_val.push(obj[k].value);
+                }
+                return JSON.stringify(check_val);
+            }
+
+            function abc(){
+                var input_data = {};
+                // 编辑分类
+                var edit_category = many_checked("category_type");
+                // 是否显示在首页
+                var is_homepage = getRadioRes("is_homepage");
+                // 是否发布
+                var is_release = getRadioRes("is_release");
+                // 是否允许评论
+                var is_comment = getRadioRes("is_comment");
+                // 是否置顶
+                var is_top = getRadioRes("is_top");
+                // 是否密码保护
+                var is_password = getRadioRes("is_password");
+                // 密码值
+                var Password = document.getElementsByName("Password")[0].value;
+
+                // 定义标签
+                var tag = document.getElementsByName("tag")[0].value;
+                // 推送好友
+                var friends = document.getElementsByName("friends")[0].value;
+                // 富文本编辑器的所有内容
+                var input_data_html = getAllHtml();
+                // 带有一部分代码的内容
+                var input_data_content = getContent();
+                // 编辑器纯内容
+                var input_data_text = getContentTxt();
+                // 标题
+                var input_title = document.getElementsByClassName("titleInput")[0].value;
+
+
+
+                // 这个注释是： 当修改已经发布的内容uedit的时候使用的
+                // var input_test_html = '<h3 style="margin: 10px 0px; padding: 3px; font-size: 16px; color: rgb(255, 255, 255); background-color: rgb(0, 142, 183); border-radius: 3px; text-shadow: initial; font-family: &quot;comic sans ms&quot;; background-image: none; line-height: 1.5; white-space: normal;">一、什么是存储过程？</h3><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; text-decoration-line: underline; border: none !important;"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码" style="margin: 0px; padding: 0px; max-width: 660px; border: none !important;"/></a></span></p><pre style="margin-top: 0px; margin-bottom: 0px; padding: 0px; white-space: pre-wrap; word-wrap: break-word; font-family: &quot;Courier New&quot; !important;">stroed&nbsp;procedure↵存储过程是在数据库系统中，&nbsp;一组为了完成特定功能的sql语句集，&nbsp;静编译后存储在数据库中，↵用户通过指定存储过程的名字并给出参数(如果该存储过程带有参数)来执行它。↵↵存储过程不仅仅是&quot;批处理&quot;存储过程是经过编译的sql语句集</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; text-decoration-line: underline; border: none !important;"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码" style="margin: 0px; padding: 0px; max-width: 660px; border: none !important;"/></a></span></p><p><img src="http://192.168.2.137:8888/static/ueditor/php/upload/image/2018418/171047953516.png" title="image.png" alt="image.png"/></p>';
+                //setContent(input_test_html);
+
+                input_data["title"] = input_title;
+                input_data["edit_category"] = edit_category;
+                input_data["is_homepage"] = is_homepage;
+                input_data["is_release"] = is_release;
+                input_data["is_comment"] = is_comment;
+                input_data["is_top"] = is_top;
+                input_data["is_password"] = is_password;
+                input_data["Password"] = Password;
+                input_data["tag"] = tag;
+                input_data["input_data_html"] = input_data_html;
+                input_data["input_data_content"] = input_data_content;
+                input_data["input_data_text"] = input_data_text;
+                input_data["friends"] = friends;
+                <!--console.log(input_data);-->
+
+
+                var fileObj = $("#article_little_img")[0].files[0];
+                var form = new FormData();//创建一个form对象类似<form>
+                form.append("info", JSON.stringify(input_data));
+                form.append("article_little_img", $("#article_little_img")[0].files[0]);
+
+                if (input_title && input_data_text && fileObj){
+                    $.ajax({
+                        url: "/add_article",
+                        type: 'post',
+                        data: form,
+                        processData: false,
+                        contentType: false,
+                        success: function(arg){
+                        var data = JSON.parse(arg);
+                        if (data["statuscode"] == 2000){
+                            window.location.href= "/admin.html";
+                        }else{
+                            alert("ErrorCode: " + data["statuscode"] + "\n MSG: " + data["statusmessage"])
+                        }
+
+
+                        }
+                    })
+                }
+                else {
+                    alert("标题和编辑器和博文略缩图内容必填！！！")
+                }
+
+
+            }
+
+
+        function format(arg){
+            if(arg.slice(0,1)=="'" && arg.slice(-1)=="'"){
+                return arg.slice(1, -1);
+            }
+
+        }
+
+        window.onload = function(){
+        // 1. 生成Category 的多选框标签， 可多选
+        var form = {};
+
+        $.ajax({
+                url: "/showcategory",
+                type: 'post',
+                data: form,
+                success: function(arg){
+                    var my_data = JSON.parse(arg);
+                    if (my_data["statuscode"]==2000){
+
+                        //  标签信息【{}， {}】
+                        var category_info = my_data["value"];
+
+                        outside_class = document.getElementsByClassName("category");
+
+                        // <p><input type="checkbox" name="vehicle" value="Bike" /> I have a bike</p>
+
+                        for (var i=0; i < category_info.length; i++){
+                            var p_label = document.createElement("p");
+
+
+                            var multiple_input = document.createElement("input");
+                            p_label.innerHTML = "" + format(category_info[i]["Title"]);
+                            p_label.appendChild(multiple_input);
+
+                            outside_class[0].appendChild(p_label);
+                            document.getElementsByClassName("category")[0].getElementsByTagName("input")[i].setAttribute("type","checkbox");
+                            document.getElementsByClassName("category")[0].getElementsByTagName("input")[i].setAttribute("name","category_type");
+                            document.getElementsByClassName("category")[0].getElementsByTagName("input")[i].setAttribute("value",category_info[i]["ID"]);
+
+
+                        }
+
+                      }
+                    }
+            })
+
+
+
+        }
+
+    </script>
+
+</div>
+{% end %}

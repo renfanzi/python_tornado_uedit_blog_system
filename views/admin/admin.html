@@ -1,0 +1,88 @@
+<!--后台管理首页-->
+
+<!DOCTYPE html>
+<!-- saved from url=(0047)http://www.jq22.com/demo/jQueryNav201710162238/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>后台管理</title>
+    <link rel="stylesheet" type="text/css" href="./static/admin/css/nav.css">
+    <link rel="stylesheet" type="text/css" href="./static/admin/css/rightbody.css">
+    <link rel="stylesheet" type="text/css" href="./static/admin/css/iconfont.css">
+    <script src="./static/admin/js/jquery-1.10.2.js"></script><script src="./static/admin/js/jquery.min.js"></script>
+    <script type="text/javascript" src="./static/admin/js/nav.js"></script>
+</head>
+<style>
+    .clearfix:before,.clearfix:after{
+        content:'';
+        display:table;
+     }
+    .clearfix:after{
+        clear:both;
+    }
+</style>
+<body style="overflow-y:hidden">
+    <div class="header">
+       
+    </div>
+    <div style="width:100%" class="clearfix outer">
+    <div class="nav">
+        <div class="nav-top">
+            <div id="mini" style="border-bottom:1px solid rgba(255,255,255,.1)"><img src="./static/admin/img/mini.png"></div>
+        </div>
+        <ul>
+            <li class="nav-item">
+                <a href="javascript:;"><i class="my-icon nav-icon icon_1"></i><span>网站配置</span><i class="my-icon nav-more"></i></a>
+                <ul style="display: none;">
+
+                    <li><a href="javascript:;"><span>设置</span></a></li>
+                    <li><a href="javascript:;"><span>选项</span></a></li>
+                    <li><a href="javascript:;"><span>头像设置</span></a></li>
+                    <li><a href="javascript:;"><span>个人资料</span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:;"><i class="my-icon nav-icon icon_2"></i><span>文章管理</span><i class="my-icon nav-more"></i></a>
+                <ul style="">
+                    <li><a href="/article_directories.html"><span>我的文章</span></a></li>
+                    <li><a href="/create_article.html"><span>添加文章</span></a></li>
+                    <li><a href="/edit_classify.html"><span>编辑分类</span></a></li>
+                    <li><a href="javascript:;"><span>站内新闻</span></a></li>
+                    <li><a href="javascript:;"><span>站内公告</span></a></li>
+                    <li><a href="javascript:;"><span>登录日志</span></a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a href="javascript:;"><i class="my-icon nav-icon icon_3"></i><span>****</span><i class="my-icon nav-more"></i></a>
+                <ul style="">
+                    <li><a href="javascript:;"><span>订单列表</span></a></li>
+                    <li><a href="javascript:;"><span>打个酱油</span></a></li>
+                    <li><a href="javascript:;"><span>也打酱油</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="rightbody clearfix" style="overflow-y:auto">
+        {% block article_directories %}{% end %}
+        {% block create_article %}{% end %}
+        {% block edit_classify %}{% end %}
+        {% block edit_article %}{% end %}
+    </div>
+    </div>
+    <div class="footer">
+
+    </div>
+
+
+
+</body></html>
+<script>
+$(function(){
+    $(window).resize()
+})
+$(window).resize(function(){
+    var height=$(window).height();
+    $('.nav').height(height-50+'px');
+    $('.rightbody').height(height-50+'px');
+    $('.outer').height(height-50+'px');
+})
+</script>
