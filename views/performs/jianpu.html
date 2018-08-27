@@ -1,0 +1,53 @@
+{% extends 'layout.html' %}
+
+{% block jianpu %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+</head>
+<script type="text/javascript" src="/static/admin/js/jquery-1.10.2.js"></script>
+<script type="text/javascript">
+    function format(arg){
+                if(arg.slice(0,1)=="'" && arg.slice(-1)=="'"){
+                    return arg.slice(1, -1);
+                }
+
+            }
+    window.onload=function(){
+            var file_id = document.URL.split('/')[4].split('.')[0];
+
+            $.ajax({
+                        url: "/show_single_article",
+                        type: 'post',
+                        data: {"UserID":123456, "ID": file_id},
+
+                        success: function(arg){
+                            var data = JSON.parse(arg);
+
+                            var html_format_data = format(data["value"]["WriteHtmlContent"]);
+
+                            document.getElementById('jp').innerHTML = html_format_data;
+
+
+
+
+                        }
+                })
+    }
+
+
+
+
+</script>
+<body>
+    <div id="jp"></div>
+
+
+</body>
+</html>
+
+{% end %}

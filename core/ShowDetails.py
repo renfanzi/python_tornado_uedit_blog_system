@@ -13,7 +13,7 @@ def ShowAllArticleDetail(UserID):
 
 
 def ShowSingleArticleDetail(UserID, TextID):
-    return ShowSingleArticleModel(UserID, TextID)
+    return ShowSingleArticleModel(UserID=UserID, TextID=TextID)
 
 
 def ShowPagerDetail(UserID):

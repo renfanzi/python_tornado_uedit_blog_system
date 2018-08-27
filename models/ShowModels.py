@@ -51,7 +51,7 @@ def ShowAllArticleModel(UserID):
     ret.close()
     return data
 
-def ShowSingleArticleModel(UserID, TextID):
+def ShowSingleArticleModel(UserID=123456, TextID=None):
     sql = """
             SELECT
                   *

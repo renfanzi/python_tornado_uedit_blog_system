@@ -228,7 +228,7 @@
 
         </div>
 
-        <h3>上传博文略缩图</h3>
+        <h3>上传博文首页略缩图</h3>
         <input type="file" id="article_little_img" />
 
 
@@ -349,19 +349,19 @@
                 // var input_test_html = '<h3 style="margin: 10px 0px; padding: 3px; font-size: 16px; color: rgb(255, 255, 255); background-color: rgb(0, 142, 183); border-radius: 3px; text-shadow: initial; font-family: &quot;comic sans ms&quot;; background-image: none; line-height: 1.5; white-space: normal;">一、什么是存储过程？</h3><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; text-decoration-line: underline; border: none !important;"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码" style="margin: 0px; padding: 0px; max-width: 660px; border: none !important;"/></a></span></p><pre style="margin-top: 0px; margin-bottom: 0px; padding: 0px; white-space: pre-wrap; word-wrap: break-word; font-family: &quot;Courier New&quot; !important;">stroed&nbsp;procedure↵存储过程是在数据库系统中，&nbsp;一组为了完成特定功能的sql语句集，&nbsp;静编译后存储在数据库中，↵用户通过指定存储过程的名字并给出参数(如果该存储过程带有参数)来执行它。↵↵存储过程不仅仅是&quot;批处理&quot;存储过程是经过编译的sql语句集</pre><p><span class="cnblogs_code_copy" style="margin: 0px; padding: 0px 5px 0px 0px; line-height: 1.5 !important;"><a title="复制代码" style="margin: 0px; padding: 0px; text-decoration-line: underline; border: none !important;"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码" style="margin: 0px; padding: 0px; max-width: 660px; border: none !important;"/></a></span></p><p><img src="http://192.168.2.137:8888/static/ueditor/php/upload/image/2018418/171047953516.png" title="image.png" alt="image.png"/></p>';
                 //setContent(input_test_html);
 
-                input_data["title"] = input_title;
-                input_data["edit_category"] = edit_category;
-                input_data["is_homepage"] = is_homepage;
-                input_data["is_release"] = is_release;
-                input_data["is_comment"] = is_comment;
-                input_data["is_top"] = is_top;
-                input_data["is_password"] = is_password;
+                input_data["ArticleTitle"] = input_title;
+                input_data["CategoryID"] = edit_category;
+                input_data["HomePage"] = is_homepage;
+                input_data["Release"] = is_release;
+                input_data["AllowComment"] = is_comment;
+                input_data["Top"] = is_top;
+                input_data["AllowPassword"] = is_password;
                 input_data["Password"] = Password;
-                input_data["tag"] = tag;
-                input_data["input_data_html"] = input_data_html;
-                input_data["input_data_content"] = input_data_content;
-                input_data["input_data_text"] = input_data_text;
-                input_data["friends"] = friends;
+                input_data["Tag"] = tag;
+                input_data["AllHtml"] = input_data_html;
+                input_data["WriteHtmlContent"] = input_data_content;
+                input_data["WriteHtml"] = input_data_text;
+                input_data["Friends"] = friends;
                 <!--console.log(input_data);-->
 
 

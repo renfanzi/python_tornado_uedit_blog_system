@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>余音箫馆</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta content="yes" name="apple-mobile-web-app-capable">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-eqiv="cleartype" content="ON">
+    <meta name="keywords" content="箫,萧,萧曲,箫曲,箫入门教程,箫谱,箫雅集，箫教程,箫视频教学,箫分享平台!">
+    <meta name="description" content="余音箫馆是一个致力于整合优质箫经验，并向广大箫爱好者分享精彩箫视频和箫谱的箫资讯分享平台！">
+    <style>
+        #ac-globalnav {
+             position: absolute;
+             top: 0;
+             right: 0;
+             left: 0;
+             display:block;
+             z-index:9999;
+             margin: 0;
+             width: 100%;
+             min-width: 2000px;
+             height: 88px;
+             max-height: 100px;
+             background: #333;
+             background: rgba(0,0,0,0.8);
+             font-size: 17px;
+             user-select: none;
+         }
+         #web_button {
+             position: absolute;
+             bottom: 0;
+             right: 0;
+             left: 0;
+             z-index: 9999;
+             display: block;
+             margin: 0;
+             width: 100%;
+             min-width: 1024px;
+             height: 44px;
+             max-height: 100px;
+             background: #333;
+             background: rgba(0,0,0,0.8);
+             font-size: 17px;
+             user-select: none;
+             line-height:44px;
+         }
+
+        .globalnav_li {
+              display: inline;
+              list-style:none;
+              margin-right:3.8%;
+              color: #fff;
+              line-height:88px;
+              list-style-type:none;
+              cursor:pointer;
+
+        }
+
+        .globalnav_li:hover{
+            color: red;
+            <!--想换加入背景色的话， 可以使用background-->
+        }
+        .globalnav_ul {
+            float:left;
+            width:100%;
+            margin-left:19.4%;
+            margin-right:20%;
+            margin-top:0px;
+            margin-bottom:0px;
+            list-style-type:none;
+        }
+
+        #web-body{
+
+            position: fixed;
+            left: 0;
+            right: 0;
+            padding: 0;
+            margin: 0;
+
+            top: 88px;
+            bottom: 44px;
+
+            overflow: auto;
+
+            background: white;
+        }
+
+
+        #body_content{
+            <!--width:100%;-->
+            height:100%;
+            margin:0 22.5%;
+
+        }
+        .active{
+            color: red;
+        }
+        .hide{
+            display:none;
+        }
+        a {margin: 0; padding:0;}
+    </style>
+</head>
+
+<body>
+<!--top-->
+<div>
+    <div id="ac-globalnav">
+        <ul class="globalnav_ul">
+            <a href="/index.html"><li class="globalnav_li" target="h1" onclick="SHOW(this)">首页</li></a>
+            <li class="globalnav_li" target="h2" onclick="SHOW(this)">自学教程</li></a>
+            <li class="globalnav_li" target="h3" onclick="SHOW(this)">指法表</li>
+           <a href="/numbered_musical_notation.html"> <li class="globalnav_li" target="h4" onclick="SHOW(this)">曲谱</li></a>
+            <li class="globalnav_li" target="h5" onclick="SHOW(this)">视频作品</li>
+            <li class="globalnav_li" target="h6" onclick="SHOW(this)">资料下载</li>
+            <li class="globalnav_li" target="h7" onclick="SHOW(this)">社区</li>
+            <li class="globalnav_li" target="h8" onclick="SHOW(this)">搜索</li>
+
+            <li></li>
+        </ul>
+    </div>
+
+</div>
+
+<!--body-->
+<div id="web-body">
+    <div style="height: auto;">
+        <div id="body_content">
+
+            <div id="content">
+
+                {% block index_home %}{% end %}
+                {% block numbered_musical_notation %}{% end %}
+                {% block jianpu %}{% end %}
+
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<!--button-->
+<div id="web_button">
+    <div>
+        <img src="">
+    </div>
+
+</div>
+<script type="text/javascript" src="/static/admin/js/base.js"></script>
+
+
+</body>
+</html>

@@ -96,7 +96,6 @@ class ShowSingleArticleHandler(SessionBaseHandler):
             data = {}
             try:
                 data = ShowSingleArticleDetail(UserID, TextID)
-                raise CustomException(4002)
             except CustomException as e:
                 status = int(e.message[1:5])
                 my_log.error(e)
@@ -105,7 +104,19 @@ class ShowSingleArticleHandler(SessionBaseHandler):
                 status = 5000
             return result(status=status, value=data)
         else:
-            return self.noLogin()
+            status = 2000
+            UserID = self.get_argument("UserID", None)
+            TextID = self.get_argument("ID", None)
+            data = {}
+            try:
+                data = ShowSingleArticleDetail(UserID, TextID)
+            except CustomException as e:
+                status = int(e.message[1:5])
+                my_log.error(e)
+            except Exception as e:
+                my_log.error(e)
+                status = 5000
+            return result(status=status, value=data)
 
     def noLogin(self):
         return result(status=4005)
@@ -116,18 +127,35 @@ class ShowSingleArticleHandler(SessionBaseHandler):
 
 class ShowHomeIndexHandler(BaseHandler):
     def post(self, *args, **kwargs):
-        self.render('performs/index.html')
+        self.render('performs/index_home.html')
 
     def get(self, *args, **kwargs):
-        self.render('performs/index.html')
+        self.render('performs/index_home.html')
+
+
+class ShowNumberedMusicalNotationHandler(BaseHandler):
+    def post(self, *args, **kwargs):
+        self.render('performs/numbered_musical_notation.html')
+
+    def get(self, *args, **kwargs):
+        self.render('performs/numbered_musical_notation.html')
+
+
+class ShowHomeJianpuHandler(BaseHandler):
+    def post(self, *args, **kwargs):
+        self.render('performs/jianpu.html')
+
+    def get(self, *args, **kwargs):
+        self.render('performs/jianpu.html')
+
 
 
 class ShowOtherHtmlHandler(BaseHandler):
     def post(self, *args, **kwargs):
-        self.redirect('/index.html')
+        self.redirect('/index_home.html')
 
     def get(self, *args, **kwargs):
-        self.redirect('/index.html')
+        self.redirect('/index_home.html')
 
 
 # -----<查看分页>----- #

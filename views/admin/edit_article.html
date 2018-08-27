@@ -231,7 +231,7 @@
         </div>
 
 
-        <h3>上传博文略缩图</h3>
+        <h3>上传博文首页略缩图</h3>
         <div id="old_home_img">
 
         </div>
@@ -454,16 +454,18 @@
                return(false);
         }
 
+        var old_data;
+        var ID;
 
         window.onload = function(){
             // 获得article id
 
             var id;
-            id = getQueryVariable("id");
+            ID = id = getQueryVariable("id");
 
 
             // 获取数据， 并赋值
-            text_data = get_data(id);
+            old_data = text_data = get_data(id);
             ProduceCateGoRies();
             set_data(text_data);
 
@@ -471,7 +473,129 @@
 
 
         }
+        function getRadioRes(Name){
 
+                var rdsObj = document.getElementsByName(Name);
+                var checkVal = null;
+                for(i = 0; i < rdsObj.length; i++){
+                    if(rdsObj[i].checked){checkVal = rdsObj[i].value;}
+                }
+                return checkVal;
+            }
+        // 获取复选框
+        function many_checked(Name){
+            obj = document.getElementsByName(Name);
+            check_val = [];
+            for(k in obj){
+                if(obj[k].checked)
+                    check_val.push(obj[k].value);
+            }
+            return JSON.stringify(check_val);
+        }
+
+        function abc(){
+            var input_data = {};
+            // 编辑分类
+            var edit_category = many_checked("category_type");
+            // 是否显示在首页
+            var is_homepage = getRadioRes("is_homepage");
+            // 是否发布
+            var is_release = getRadioRes("is_release");
+            // 是否允许评论
+            var is_comment = getRadioRes("is_comment");
+            // 是否置顶
+            var is_top = getRadioRes("is_top");
+            // 是否密码保护
+            var is_password = getRadioRes("is_password");
+            // 密码值
+            var Password = document.getElementsByName("Password")[0].value;
+
+            // 定义标签
+            var tag = document.getElementsByName("tag")[0].value;
+            // 推送好友
+            var friends = document.getElementsByName("friends")[0].value;
+            // 富文本编辑器的所有内容
+            var input_data_html = getAllHtml();
+            // 带有一部分代码的内容
+            var input_data_content = getContent();
+            // 编辑器纯内容
+            var input_data_text = getContentTxt();
+            // 标题
+            var input_title = document.getElementsByClassName("titleInput")[0].value;
+
+
+            input_data["ArticleTitle"] = input_title;
+            input_data["CategoryID"] = edit_category;
+            input_data["HomePage"] = is_homepage;
+            input_data["Release"] = is_release;
+            input_data["AllowComment"] = is_comment;
+            input_data["Top"] = is_top;
+            input_data["AllowPassword"] = is_password;
+            input_data["Password"] = Password;
+            input_data["Tag"] = tag;
+            input_data["AllHtml"] = input_data_html;
+            input_data["WriteHtmlContent"] = input_data_content;
+            input_data["WriteHtml"] = input_data_text;
+            input_data["Friends"] = friends;
+
+
+            var new_data;
+            new_data = input_data;
+
+            update = {};
+            for (var new_key in new_data){
+
+
+                    if (typeof old_data[new_key] == 'string'){
+
+                        var sub_old_data = format(old_data[new_key]);
+
+                    }else{
+                        var sub_old_data = old_data[new_key]
+                    }
+
+                    if (new_data[new_key] != sub_old_data){
+                        update[new_key] = new_data[new_key];
+                    }
+
+
+
+            }
+            update["ID"] = old_data["ID"];
+            var fileObj = $("#article_little_img")[0].files;
+            var form = new FormData();//创建一个form对象类似<form>
+            form.append("info", JSON.stringify(update));
+
+            if (fileObj.length != 0){
+                form.append("article_little_img", $("#article_little_img")[0].files[0]);
+            }
+            if (update != {}){
+                    $.ajax({
+                        url: "/update_article",
+                        type: 'post',
+                        data: form,
+                        processData: false,
+                        contentType: false,
+                        success: function(arg){
+                            <!--var data = JSON.parse(arg);-->
+                            <!--if (data["statuscode"] == 2000){-->
+                                <!--window.location.href= "/admin.html";-->
+                            <!--}else{-->
+                                <!--alert("ErrorCode: " + data["statuscode"] + "\n MSG: " + data["statusmessage"])-->
+                            <!--}-->
+
+
+                        }
+                    })
+            }
+            else {
+                alert("没有改变内容！！！")
+            }
+
+
+
+
+        }
 
     </script>
 

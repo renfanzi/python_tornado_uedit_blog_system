@@ -1,5 +1,8 @@
 <!--简谱网页-->
 <!--雨溪-->
+{% extends 'layout.html' %}
+
+{% block numbered_musical_notation %}
 
 <!DOCTYPE html>
 <html>
@@ -36,6 +39,7 @@
     </style>
 
 </head>
+
 <body>
 <!-- 主题头部声明-->
 <div>
@@ -66,6 +70,7 @@
 <div>
     <div class="pagination-nick" style="margin-left:150px;margin-top:60px"></div>
 </div>
+<script type="text/javascript" src="/static/admin/js/base.js"></script>
 <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
 
@@ -173,11 +178,11 @@ function paginationNick(opt) {
 
                     // 这里是控制页面显示内容div的地方
                     arr.forEach(function(v) {
-                            str += '<li style="list-style: none;padding: 20px;border-bottom: 1px solid #F1F1F1;">'
+                            str += '<a target="_blank" href="/jianpu.html/' + v["ID"] + '.html"><li style="list-style: none;padding: 20px;border-bottom: 1px solid #F1F1F1;" fileid=' + v["ID"] + '>'
                                str += ' <div  class="ttt" style="display: block;height:80px ">'
                                     <!--左-->
                                 str += '<div style="width:80px; height:80px;display:inline-block;float: left;">'
-                                  str += '<img src="http://www.muyuchen.com:8888/static' + v["HomeImage"].slice(1, -1) + '"'
+                                  str += '<img src="'+ Base()["sub_url"] + v["HomeImage"].slice(1, -1) + '"'
                                 str += 'style="border-radius: 50%;width:80px;height:80px;">'
 
                                   str += '</div>'
@@ -186,8 +191,8 @@ function paginationNick(opt) {
                                    str += '<div style="height:80px;display:inline-block;float: left;">'
                                             <!--右上-->
                                   str += '<div class="aaa" style="margin: 28px 0 0 30px">'
-                                   str += '<span style="color:block">'
-                                   str += "《" +  v["ArticleTitle"].slice(1, -1) + "》箫谱_高清简谱_箫版示范演奏_江南小屋"
+                                   str += '<span style="color:block" fileid=' + v["ID"] + '>'
+                                   str += v["ArticleTitle"].slice(1, -1) + ""
                                     str += '</span>'
                                     if (v["Top"]==1) {
                                         str += '<span class="makeTop">置顶</span>'
@@ -203,7 +208,7 @@ function paginationNick(opt) {
                                  str += '</div>'
 
                                str += '</div>'
-                           str += '</li>'
+                           str += '</li></a>'
                     });
                     $('#sub_body_left_ul').html(str);
 
@@ -338,3 +343,4 @@ function paginationNick(opt) {
 </body>
 </html>
 
+{% end %}

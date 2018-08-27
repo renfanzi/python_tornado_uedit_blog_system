@@ -114,7 +114,7 @@ def AddArticleModel(info):
                 `AllowUserVisit`=%s,
                 `AllowPassword`=%s,
                 `Password`="%s",
-                `tag`="%s",
+                `Tag`="%s",
                 `Friends`="%s",
                 `CategoryID`="%s",
                 `UserID`=%s,
@@ -123,25 +123,25 @@ def AddArticleModel(info):
     """
     ret = MyPymysql('notdbMysql')
     value = (
-        info["title"],  # ArticleTitle
-        info["input_data_html"],  # AllHtml
-        info["input_data_content"],  # WriteHtmlContent
-        info["input_data_text"],  # WriteHtml
+        info["ArticleTitle"],  # ArticleTitle
+        info["AllHtml"],  # AllHtml
+        info["WriteHtmlContent"],  # WriteHtmlContent
+        info["WriteHtml"],  # WriteHtml
 
         1,  # ArticleStatus
         1,  # Version
-        int(info["is_homepage"]),  # HomePage
-        int(info["is_release"]),  # Release
+        int(info["HomePage"]),  # HomePage
+        int(info["Release"]),  # Release
 
-        int(info["is_comment"]),  # AllowComment
-        int(info["is_top"]),  # Top
+        int(info["AllowComment"]),  # AllowComment
+        int(info["Top"]),  # Top
         1,  # AllowUserVisit
-        int(info["is_password"]),  # AllowPassword
+        int(info["AllowPassword"]),  # AllowPassword
 
         info["Password"],  # Password
-        info["tag"],  # tag
-        info["friends"],  # Friends
-        info["edit_category"],  # CategoryID
+        info["Tag"],  # tag
+        info["Friends"],  # Friends
+        info["CategoryID"],  # CategoryID
         info["UserID"],
         info["CreateTime"],
         info["HomeImage"],

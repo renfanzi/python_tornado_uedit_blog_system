@@ -32,6 +32,10 @@ createUrls = [
 performsUrls = [
     # 首页
     (r'/index.html', ShowHomeIndexHandler),
+
+    (r'/numbered_musical_notation.html', ShowNumberedMusicalNotationHandler),
+
+    (r'/jianpu.html/.*', ShowHomeJianpuHandler),
 ]
 
 # -----<富文本编辑器操作-添加文章>----- #
@@ -98,10 +102,12 @@ addUrls = [
     # -----<添加文章到库>----- #后台接口
     (r'/add_article', AddArticleHandler),
 
+
 ]
 
 updateUrls = [
-
+    # -----<修改文章到库>----- #后台接口
+    (r'/update_article', UpdateArticleHandler),
 ]
 
 deleteUrls = [
